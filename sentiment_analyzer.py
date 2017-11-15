@@ -73,15 +73,6 @@ for (words, sentiment) in two_star_reviews:
     words_filtered = [e.lower().strip('":,.!?();') for e in words.split() if len(e) >= 3]
     negative_test_reviews.append((words_filtered, sentiment))
 
-word_features = get_word_features(get_words_in_reviews(negative_test_reviews))
-false_positive_reviews = []
-for review in negative_test_reviews:
-    for (document, label) in nltk.classify.apply_features(extract_features, review):
-        if classifier.classify(document) == 'positive':
-            false_positive_reviews.append(review)
-
-
-
 negative_test_set = nltk.classify.apply_features(extract_features, negative_test_reviews)
 
 print('Accuracy for negative Reviews:')
@@ -94,5 +85,6 @@ for (words, sentiment) in four_star_reviews:
 word_features = get_word_features(get_words_in_reviews(positive_test_reviews))
 
 positive_test_set = nltk.classify.apply_features(extract_features, positive_test_reviews)
+
 print('Accuracy for positive Reviews:')
 print(nltk.classify.accuracy(classifier, positive_test_set))
